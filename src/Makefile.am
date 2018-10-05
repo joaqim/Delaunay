@@ -1,7 +1,7 @@
-AUTOMAKE_OPTIONS = subdir-objects
+AUTOMAKE_OPTIONS = foreign #subdir-objects
 ACLOCAL_AMFLAGS = $(ACLOCAL_FLAGS)# $(AM_CXXFLAGS)
 bin_PROGRAMS = main
-main_SOURCES = main.cpp 
+main_SOURCES = main.cpp
 
 main_LDADD = $(DEPS_LIBS) libImgui.la "@x_libs@"
 main_DEPENDENCIES =  libImgui.la

@@ -1,4 +1,5 @@
 AUTOMAKE_OPTIONS = foreign -Wall -Werror
+
 check_LTLIBRARIES = libgtest.la
 libgtest_la_SOURCES = ../third_party/repos/googletest/googletest/src/gtest-all.cc
 libgtest_la_CPPFLAGS = -I$(top_srcdir)/third_party/repos/googletest/googletest/include -I$(top_srcdir)/third_party/repos/googletest/googletest

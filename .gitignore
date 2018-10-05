@@ -81,6 +81,7 @@ autom4te.cache
 /src/man
 /src/scripts
 /src/src
+/src/tests
 /src/stamp-h1
 /src/include
 /src/third_party
