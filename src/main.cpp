@@ -11,6 +11,14 @@
 #include <stdio.h>
 #include <GLFW/glfw3.h>
 
+#include "gtest/gtest.h" // we will add the path to C preprocessor later
+
+TEST(CategoryTest, SpecificTest)
+{
+  ASSERT_EQ(0, 0);
+}
+
+
 static void glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error %d: %s\n", error, description);

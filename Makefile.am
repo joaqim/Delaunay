@@ -11,6 +11,6 @@ else
 AM_CXXFLAGS += -O2
 endif
 
-SUBDIRS = src doc examples man scripts
+SUBDIRS = src doc examples man scripts tests
 #SUBDIRS += third_party/repos/imgui
 

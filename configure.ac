@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.69])
 AC_INIT([main], [1.0], [joaqimpla@gmail.com])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([subdir-objects])
 AC_CONFIG_SRCDIR([src/main.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIRS([m4])
@@ -59,6 +59,7 @@ if test "$gl3" = "true"; then
 fi
 
 # Checks for libraries.
+AM_PROG_AR
 LT_INIT
 AC_ENABLE_SHARED
 AC_DISABLE_STATIC
@@ -162,6 +163,14 @@ AC_C_INLINE
 AC_TYPE_SIZE_T
 
 # Output Makefile files.
-AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile examples/Makefile man/Makefile scripts/Makefile ])
+AC_CONFIG_FILES([Makefile 
+		 src/Makefile
+		 doc/Makefile
+		 examples/Makefile
+		 man/Makefile
+		 scripts/Makefile
+		 tests/Makefile 
+		 ])
+
 # third_party/repos/imgui/Makefile \
 AC_OUTPUT
