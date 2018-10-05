@@ -1,5 +1,6 @@
 # git submodules
 /third_party/repos/*
+/third_party/repos
 # http://www.gnu.org/software/automake
 
 /Makefile.in
