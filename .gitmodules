@@ -2,3 +2,6 @@
 	path = third_party/repos/imgui
 	url = https://github.com/Zenoobia/imgui.git
 	ignore = dirty
+[submodule "third_party/repos/googletest"]
+	path = third_party/repos/googletest
+	url = https://github.com/google/googletest

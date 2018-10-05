@@ -52,6 +52,12 @@ AC_ARG_ENABLE(gl3,
        esac],
        [gl3=false])
 
+AM_CONDITIONAL(GL3, test x"$gl3" = x"true")
+
+if test "$gl3" = "true"; then
+	AC_DEFINE([USE_GL3], ["true"], ["Use GL3"])
+fi
+
 # Checks for libraries.
 LT_INIT
 AC_ENABLE_SHARED

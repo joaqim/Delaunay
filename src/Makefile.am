@@ -22,13 +22,13 @@ libImgui_la_SOURCES = ../third_party/repos/imgui/imgui.cpp \
 		      ../third_party/repos/imgui/imgui_draw.cpp \
 		      ../third_party/include/imguifilesystem.cpp
 
-if GL3
-libImgui_la_SOURCES += ../third_party/repos/imgui/examples/opengl3_example/imgui_impl_glfw_gl3.cpp
-noinst_HEADERS += ../third_party/repos/imgui/examples/opengl3_example/imgui_impl_glfw_gl3.h
-else
+#if GL3
+#libImgui_la_SOURCES += ../third_party/repos/imgui/examples/opengl3_example/imgui_impl_glfw_gl3.cpp
+#noinst_HEADERS += ../third_party/repos/imgui/examples/opengl3_example/imgui_impl_glfw_gl3.h
+#else
 libImgui_la_SOURCES += ../third_party/repos/imgui/examples/opengl2_example/imgui_impl_glfw_gl2.cpp
 noinst_HEADERS += ../third_party/repos/imgui/examples/opengl2_example/imgui_impl_glfw_gl2.h
-endif
+#endif
 
 libImgui_la_CPPFLAGS = $(GL_CFLAGS) $(AM_CXXFLAGS)
 
