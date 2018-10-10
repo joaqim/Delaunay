@@ -4,6 +4,12 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+
+#ifndef GLFW_TRUE
+#define GLFW_TRUE  1
+#define GLFW_FALSE 0
+#endif
+
 #include "GUI.h"
 
 #include <iostream>

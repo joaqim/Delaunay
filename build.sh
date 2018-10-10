@@ -1,4 +1,5 @@
-CONFIGURE_OPTS="--with-x11=yes --with-glfw=yes --with-ocr=no --enable-gl3=yes"
+#CONFIGURE_OPTS="--with-x11=yes --with-glfw=yes --with-ocr=no --enable-gl3=yes --with-boost=yes"
+CONFIGURE_OPTS="--with-x11=no --with-glfw=no --with-ocr=no --enable-gl3=no --with-boost=no"
 
 if [ "$1" == "ycm" ]; then
 	git clean -xi
@@ -12,7 +13,7 @@ fi
 #mkdir -p build; cd build
 set e
 
-cd src
+cd src_xiw
 
 if [ "$1" == "win" ]; then
 	../configure --prefix=/mingw64
@@ -20,7 +21,7 @@ else
 #	../configure --prefix=/usr --enable-gl3=yes
 	#../configure --prefix=/usr --with-x11=yes --with-glfw=yes --with-ocr=yes
 
-	  ../configure --prefix=/usr $CONFIGURE_OPTS -C
+	  ../configure --prefix=/usr $CONFIGURE_OPTS
 
 	  #NOTE: flag -C enables use of cache, will need to manually delete cache if new package is installed
 	# might not work with some third party macros [https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.69/html_node/Caching-Results.html#Caching-Results]

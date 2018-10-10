@@ -13,7 +13,7 @@ m4_include([m4/m4_ax_cxx_compile_stdcxx.m4])
 AC_PROG_CXX
 AC_PROG_CC
 
-AX_CXX_COMPILE_STDCXX(17, [noext], [mandatory])
+AX_CXX_COMPILE_STDCXX(14, [noext], [mandatory])
 
 
 if test x$ac_success = xno; then
@@ -66,9 +66,16 @@ AC_ENABLE_SHARED
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL(libtool)
 
-BOOST_REQUIRE
-BOOST_FILESYSTEM
-#BOOST_POLYGON
+# Conditionals
+
+AC_ARG_WITH([boost], AS_HELP_STRING([--with-boost], [Build with the Boost libraries]))
+
+
+AS_IF([test "x$with_boost" = "xyes"], [
+       #BOOST_REQUIRE
+       #BOOST_FILESYSTEM
+       #BOOST_POLYGON
+       ])
 
 
 AC_ARG_WITH([glfw], AS_HELP_STRING([--with-glfw], [Build with the GLFW3]))
@@ -77,17 +84,18 @@ AS_IF([test "x$with_glfw" = "xyes"], [
           PKG_CHECK_MODULES([GLFW], [glfw3])
 	  AC_CHECK_LIB(glfw, glfwInit, [], AC_MSG_ERROR([Could not find libglfw. Try $ ./configure LDFLAGS='-Lyour-glfw-lib-path']))
 	  AC_CHECK_HEADERS([GLFW/glfw3.h], [], AC_MSG_ERROR([Could not find GLFW/glfw3.h. Try $ ./configure CXXFLAGS='-Iyour-GLFW-include-path]))
+	  # Find Unix -lgl
+	  AC_CHECK_LIB(GL, glPushMatrix, [], AC_MSG_ERROR([Could not find libGL. Try $ ./configure LDFLAGS='-Lyour-GL-lib-path']))
+
+	  #AC_CHECK_LIB(glew, glewInit, [], AC_MSG_ERROR([Could not find libGlew. Try $ ./configure LDFLAGS='-Lyour-glew-lib-path']))
+	  PKG_CHECK_MODULES([DEPS], [glew]) #TODO: put all OpenGL libs into own GL_LIBS not DEPS_LIBS
+
+	  # Find Windows -lopengl32
+	  #AC_CHECK_LIB(opengl32, glPushMatrix, [], AC_MSG_ERROR([Could not find libopengl32. Try $ ./configure LDFLAGS='-Lyour-opengl32-lib-path']))
+
 	  ])
 
 
-# Find Unix -lgl
-AC_CHECK_LIB(GL, glPushMatrix, [], AC_MSG_ERROR([Could not find libGL. Try $ ./configure LDFLAGS='-Lyour-GL-lib-path']))
-
-#AC_CHECK_LIB(glew, glewInit, [], AC_MSG_ERROR([Could not find libGlew. Try $ ./configure LDFLAGS='-Lyour-glew-lib-path']))
-PKG_CHECK_MODULES([DEPS], [glew]) #TODO: put all OpenGL libs into own GL_LIBS not DEPS_LIBS
-
-# Find Windows -lopengl32
-#AC_CHECK_LIB(opengl32, glPushMatrix, [], AC_MSG_ERROR([Could not find libopengl32. Try $ ./configure LDFLAGS='-Lyour-opengl32-lib-path']))
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h limits.h stdint.h string.h sys/time.h termios.h unistd.h])
@@ -100,8 +108,8 @@ AC_CHECK_HEADERS([fcntl.h limits.h stdint.h string.h sys/time.h termios.h unistd
 
 AC_ARG_WITH([ocr], AS_HELP_STRING([--with-ocr], ["Build with OpenCv, Tesseract-ocr and it's dependencies: Leptonica"]))
 AS_IF([test "x$with_ocr" = "xyes"], [
-PKG_CHECK_MODULES([DEPS], [opencv] [lept] [tesseract] [glib-2.0 >= 2.24.1])
-])
+       PKG_CHECK_MODULES([DEPS], [opencv] [lept] [tesseract] [glib-2.0 >= 2.24.1])
+       ])
 #PKG_CHECK_MODULES([DEPS], [opencv] [lept] [tesseract] [libssh] [glib-2.0 >= 2.24.1])
 
 
@@ -125,38 +133,38 @@ AS_IF([test "x$with_x11" = "xyes"], [
 			     *** more details.])
 	       fi
 
-# Check for the X11 library
+	       # Check for the X11 library
 
-	AC_CHECK_LIB(X11, XOpenDisplay, x_libs="-lX11 $X_EXTRA_LIBS", 
-	     AC_MSG_ERROR([*** libX11 not found. Check 'config.log' for more details.]),
-	     $X_EXTRA_LIBS)
+	       AC_CHECK_LIB(X11, XOpenDisplay, x_libs="-lX11 $X_EXTRA_LIBS", 
+			    AC_MSG_ERROR([*** libX11 not found. Check 'config.log' for more details.]),
+			    $X_EXTRA_LIBS)
 
-AC_ARG_ENABLE([disable_shm], AS_HELP_STRING([--disable-shm], [Build without the XShm Extension]))
+	       AC_ARG_ENABLE([disable_shm], AS_HELP_STRING([--disable-shm], [Build without the XShm Extension]))
 
-if test "x$enable_shm" != "xno"; then
-	# Check for the Xext library (needed for XShm extention)
-	#AC_CHECK_LIB(libssh, ) // TODO: (library, function, [action-if-found], [action-if-not-found], [other-libraries])
-	AC_CHECK_LIB(Xext, XShmAttach,
-		     x_libs="-lXext $x_libs", 
-		     # On AIX, it is in XextSam instead, but we still need -lXext
-		     AC_CHECK_LIB(XextSam, XShmAttach, 
-				  x_libs="-lXextSam -lXext $x_libs", 
-				  no_xext_lib=yes, $x_libs),
-				  $x_libs)
-	fi
+	       if test "x$enable_shm" != "xno"; then
+		       # Check for the Xext library (needed for XShm extention)
+		       #AC_CHECK_LIB(libssh, ) // TODO: (library, function, [action-if-found], [action-if-not-found], [other-libraries])
+		       AC_CHECK_LIB(Xext, XShmAttach,
+				    x_libs="-lXext $x_libs", 
+				    # On AIX, it is in XextSam instead, but we still need -lXext
+				    AC_CHECK_LIB(XextSam, XShmAttach, 
+						 x_libs="-lXextSam -lXext $x_libs", 
+						 no_xext_lib=yes, $x_libs),
+						 $x_libs)
+		       fi
 
-	x_cxxflags="$X_CFLAGS"
-	x_ldflags="$X_LDFLAGS $X_LIBS"
+		       x_cxxflags="$X_CFLAGS"
+		       x_ldflags="$X_LDFLAGS $X_LIBS"
 
-	CXXFLAGS="$saved_cxxflags $x_cflags"
-	LDFLAGS="$saved_ldflags $x_ldflags"
+		       CXXFLAGS="$saved_cxxflags $x_cflags"
+		       LDFLAGS="$saved_ldflags $x_ldflags"
 
-	AC_SUBST(x_cflags)
-	AC_SUBST(x_includes)
-	AC_SUBST(x_ldflags)
-	AC_SUBST(x_libs)
+		       AC_SUBST(x_cflags)
+		       AC_SUBST(x_includes)
+		       AC_SUBST(x_ldflags)
+		       AC_SUBST(x_libs)
 
-	])
+		       ])
 
 #CPPFLAGS += x_cxxflags x_includes x_ldflags x_libs
 #-lglfw3 -pthread -ldl -lGLU -lGL -lrt -lXrandr -lXxf86vm -lXi -lXinerama -lX11
@@ -171,13 +179,13 @@ AC_TYPE_SIZE_T
 
 # Output Makefile files.
 AC_CONFIG_FILES([Makefile 
-		 src/Makefile
-		 doc/Makefile
-		 examples/Makefile
-		 man/Makefile
-		 scripts/Makefile
-		 tests/Makefile 
+		 src_xiw/Makefile
 		 ])
+#doc/Makefile
+#examples/Makefile
+#man/Makefile
+#scripts/Makefile
+#tests/Makefile 
 
 # third_party/repos/imgui/Makefile \
-AC_OUTPUT
+	AC_OUTPUT

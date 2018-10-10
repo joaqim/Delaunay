@@ -9,3 +9,6 @@
 [submodule "third_party/repos/cppdelaunay"]
 	path = third_party/repos/cppdelaunay
 	url = https://github.com/SirAnthony/cppdelaunay
+[submodule "third_party/repos/spherical_voronoi_core"]
+	path = third_party/repos/spherical_voronoi_core
+	url = https://github.com/xw0/spherical_voronoi_core
