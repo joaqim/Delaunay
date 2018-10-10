@@ -15,6 +15,7 @@ AC_PROG_CC
 
 AX_CXX_COMPILE_STDCXX(17, [noext], [mandatory])
 
+
 if test x$ac_success = xno; then
 	if test x$CXX = xg++; then
 		GCC_VERSION_MAJOR=$(g++ -dumpversion | cut -d'.' -f1)
@@ -65,6 +66,9 @@ AC_ENABLE_SHARED
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL(libtool)
 
+BOOST_REQUIRE
+BOOST_FILESYSTEM
+#BOOST_POLYGON
 
 
 AC_ARG_WITH([glfw], AS_HELP_STRING([--with-glfw], [Build with the GLFW3]))
@@ -78,6 +82,9 @@ AS_IF([test "x$with_glfw" = "xyes"], [
 
 # Find Unix -lgl
 AC_CHECK_LIB(GL, glPushMatrix, [], AC_MSG_ERROR([Could not find libGL. Try $ ./configure LDFLAGS='-Lyour-GL-lib-path']))
+
+#AC_CHECK_LIB(glew, glewInit, [], AC_MSG_ERROR([Could not find libGlew. Try $ ./configure LDFLAGS='-Lyour-glew-lib-path']))
+PKG_CHECK_MODULES([DEPS], [glew]) #TODO: put all OpenGL libs into own GL_LIBS not DEPS_LIBS
 
 # Find Windows -lopengl32
 #AC_CHECK_LIB(opengl32, glPushMatrix, [], AC_MSG_ERROR([Could not find libopengl32. Try $ ./configure LDFLAGS='-Lyour-opengl32-lib-path']))

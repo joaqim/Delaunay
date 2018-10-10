@@ -1,0 +1,35 @@
+#version 330
+ 
+in vec4 position;
+
+void main() {
+ 	gl_Position = position;
+	gl_PointSize = 10.0;
+}
+
+function rndng ( n: float ): float
+ {//random number -1, 1
+     var e = ( n *321.9)%1;
+     return  (e*e*111.0)%2-1;
+ }
+
+ function voronoi(  vtx: Vector3  )
+ {
+     var px = Mathf.Floor( vtx.x );
+     var pz = Mathf.Floor( vtx.z );
+     var fx = Mathf.Abs(vtx.x%1);
+     var fz = Mathf.Abs(vtx.z%1);
+
+     var res = 8.0;
+     for( var j=-1; j<=1; j++ )
+     for( var i=-1; i<=1; i++ )
+     {
+         var rx = i - fx + nz2d(px+i ,pz + j ) ;
+         var rz = j - fz + nz2d(px+i ,pz + j ) ;
+         var d = Vector2.Dot(Vector2(rx,rz),Vector2(rx,rz));
+         res = Mathf.Min( res, d );
+     }
+     return Mathf.Sqrt( res );
+ }
+
+

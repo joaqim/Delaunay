@@ -1,5 +1,5 @@
-AUTOMAKE_OPTIONS = foreign subdir-objects
-ACLOCAL_AMFLAGS = -I m4
+AUTOMAKE_OPTIONS = foreign 
+ACLOCAL_AMFLAGS = -I m4 --install
 AM_CXXFLAGS = -fpic -Wall -Wextra -Werror -x c++ -isystem /usr/local/include -isystem /usr/include
 
 # Windows

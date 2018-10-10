@@ -5,15 +5,17 @@ libgtest_la_SOURCES = ../third_party/repos/googletest/googletest/src/gtest-all.c
 libgtest_la_CPPFLAGS = -I$(top_srcdir)/third_party/repos/googletest/googletest/include -I$(top_srcdir)/third_party/repos/googletest/googletest
 libgtest_la_LDFLAGS = -pthread
 
-check_PROGRAMS = gtest demo
-gtest_SOURCES = gtest.cpp
+check_PROGRAMS = gtest # demo
+gtest_SOURCES = gtest.cpp 
 gtest_LDADD = libgtest.la
 gtest_LDFLAGS = -pthread
 gtest_CPPFLAGS = -I$(top_srcdir)/third_party/repos/googletest/googletest/include\
 	-I$(top_srcdir)/third_party/repos/googletest/googletest \
 	-I$(top_srcdir)/src
 
-demo_SOURCES = demo.cpp
-demo_CPPFLAGS = -I$(top_srcdir)/src
+#NOTE: Figure out how to organize tests.cpp's when I have some test cases. . .
+#demo_SOURCES = demo.cpp
+#demo_CPPFLAGS = -I$(top_srcdir)/src
 
-TESTS = gtest
+TESTS = gtest #demo
+#TESTS = $(check_PROGRAMS)

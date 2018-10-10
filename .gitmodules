@@ -5,3 +5,7 @@
 [submodule "third_party/repos/googletest"]
 	path = third_party/repos/googletest
 	url = https://github.com/google/googletest
+	ignore = dirty
+[submodule "third_party/repos/cppdelaunay"]
+	path = third_party/repos/cppdelaunay
+	url = https://github.com/SirAnthony/cppdelaunay
