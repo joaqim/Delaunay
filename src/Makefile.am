@@ -3,19 +3,21 @@ AUTOMAKE_OPTIONS = subdir-objects #foreign
 bin_PROGRAMS = main
 main_SOURCES = main.cpp Application.cpp GUI.cpp
 
-main_LDADD = $(DEPS_LIBS) libImgui.la "@x_libs@" libDelaunay.la $(BOOST_FILESYSTEM_LDFLAGS)
-main_DEPENDENCIES =  libImgui.la libDelaunay.la $(BOOST_FILESYSTEM_LIBS)
+main_LDADD = $(DEPS_LIBS) libImgui.la "@x_libs@" libDelaunay.la libSV.la $(BOOST_FILESYSTEM_LDFLAGS)
+main_DEPENDENCIES =  libImgui.la libDelaunay.la libSV.la $(BOOST_FILESYSTEM_LIBS)
 
 #foo_LDFLAGS = $(BOOST_THREAD_LDFLAGS)
 #foo_LIBS = $(BOOST_THREAD_LIBS)
 
 main_CPPFLAGS = $(DEPS_CFLAGS) $(BOOST_CPPFLAGS) \
+ -I$(top_srcdir)/third_party/repos/spherical_voronoi_core \
  -I$(top_srcdir)/third_party/repos/imgui \
  -I$(top_srcdir)/third_party/repos/imgui/examples/opengl3_example \
  -I$(top_srcdir)/third_party/repos/imgui/examples/opengl2_example \
  -I$(top_srcdir)/third_party/repos/cppdelaunay \
  -I$(top_srcdir)/third_party/include \
  -I$(top_srcdir)/include
+
 
 # ImGui Library
 noinst_LTLIBRARIES = libImgui.la
@@ -36,6 +38,25 @@ endif
 libImgui_la_CPPFLAGS = $(GL_CFLAGS) $(AM_CXXFLAGS)
 
 libImgui_la_CPPFLAGS += -I$(top_srcdir)/third_party/repos/imgui -I$(top_srcdir)/third_party/repos/imgui/examples/libs/glfw/ -I$(top_srcdir)/third_party/repos/ #-std=c++17
+	
+# Spherical Voronoi Core lib
+
+noinst_LTLIBRARIES += libSV.la #libSphericalVoronoi
+noinst_HEADERS += \
+	../third_party/repos/spherical_voronoi_core/svMath.h \
+	../third_party/repos/spherical_voronoi_core/svMath.hpp \
+	../third_party/repos/spherical_voronoi_core/svData.h \
+	../third_party/repos/spherical_voronoi_core/svPrefix.h \
+	../third_party/repos/spherical_voronoi_core/xs_Float.h \
+	../third_party/repos/spherical_voronoi_core/xs_Config.h \
+	../third_party/repos/spherical_voronoi_core/svVoronoiCore.h
+
+libSV_la_LDFLAGS = -static -finline-functions -fpermissive
+libSV_la_SOURCES = \
+	../third_party/repos/spherical_voronoi_core/svMath.cpp \
+	../third_party/repos/spherical_voronoi_core/svVoronoiCore.cpp
+
+libSV_la_CPPFLAGS = $(AM_CXXFLAGS)
 
 # cppdelaunay https://github.com/SirAnthony/cppdelaunay
 

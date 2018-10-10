@@ -1,6 +1,7 @@
 #version 330 core
 
 in vec4 position;
+in vec4 vColor;
    
 out vec4 color;
 
@@ -45,12 +46,13 @@ float smoothVoronoi( in vec2 x )
 void main() {
      gl_Position = position;
      gl_PointSize = 10.0;
+     color = vColor;
 
 //color = position;
 // gl_Position = pvm * position ;
 
 float pct = smoothVoronoi(vec2(gl_Position));
 vec3 color3 = pct*vec3(0.0,1.0,0.0);
-color = vec4(color3,1.0);
+//color = vec4(color3,1.0);
 
 }

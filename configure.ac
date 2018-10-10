@@ -179,7 +179,7 @@ AC_TYPE_SIZE_T
 
 # Output Makefile files.
 AC_CONFIG_FILES([Makefile 
-		 src_xiw/Makefile
+		 src/Makefile
 		 ])
 #doc/Makefile
 #examples/Makefile
