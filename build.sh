@@ -1,5 +1,5 @@
 #CONFIGURE_OPTS="--with-x11=yes --with-glfw=yes --with-ocr=no --enable-gl3=yes --with-boost=yes --disable-shm=yes"
-CONFIGURE_OPTS="--with-x11=yes --with-glfw=yes --with-ocr=no --enable-gl3=yes --with-boost=yes " #--disable-shm=yes
+CONFIGURE_OPTS="--with-x11=no --with-glfw=no --with-ocr=no --enable-gl3=no --with-boost=no"
 
 if [ "$1" == "ycm" ]; then
 	git clean -xi
